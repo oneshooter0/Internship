@@ -17,7 +17,6 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
         collegeEmail: document.getElementById('collegeEmail').value,
         mobile: document.getElementById('mobile').value,
         whatsapp: document.getElementById('whatsapp').value,
-        parentsMobile: document.getElementById('parentsMobile').value,
         college: document.getElementById('college').value,
         department: document.getElementById('department').value,
         yearOfStudy: document.querySelector('input[name="yearOfStudy"]:checked').value,
