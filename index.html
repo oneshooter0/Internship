@@ -67,10 +67,9 @@
                 <span class="cert-icon">🏅</span>
                 <span>Official Certifications awarded upon completion, endorsed by National Association of Software and Service Companies</span>
             </div>
-        </div>
-    </section>
 
-            <form id="signupForm" class="signup-form">
+            <!-- Signup Form -->
+            <form id="signupForm" class="signup-form" novalidate>
                 <!-- Personal Information -->
                 <div class="form-section">
                     <h3 class="section-title">Personal Information</h3>
@@ -90,6 +89,7 @@
                         <div class="form-group">
                             <label for="collegeEmail">College Mail ID</label>
                             <input type="email" id="collegeEmail" name="collegeEmail" placeholder="your.name@college.edu">
+                            <span class="error-message" id="collegeEmailError"></span>
                         </div>
                     </div>
 
@@ -105,6 +105,7 @@
                             <span class="error-message" id="whatsappError"></span>
                         </div>
                     </div>
+                </div>
 
                 <!-- Educational Information -->
                 <div class="form-section">
@@ -124,7 +125,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="yearOfStudy">Year of Study <span class="required">*</span></label>
+                        <label>Year of Study <span class="required">*</span></label>
                         <div class="radio-group">
                             <label class="radio-label">
                                 <input type="radio" name="yearOfStudy" value="1st Year" required> 1st Year
@@ -226,8 +227,8 @@
                             <span class="error-message" id="languageError"></span>
                         </div>
                     </div>
-                </div>
 
+                    <!-- Terms & Conditions -->
                     <div class="form-group checkbox-group-single">
                         <label class="checkbox-label">
                             <input type="checkbox" id="terms" name="terms" required> 
@@ -241,6 +242,7 @@
                 <button type="submit" class="submit-btn">Submit Application</button>
             </form>
 
+            <!-- Success Message -->
             <div id="successMessage" class="success-message" style="display:none;">
                 <div class="success-content">
                     <div class="success-icon">✓</div>
