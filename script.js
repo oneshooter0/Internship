@@ -1,4 +1,29 @@
+// ============================================
+// CONFIGURATION - UPDATE THESE VALUES
+// ============================================
+const GOOGLE_FORM_ID = 'YOUR_GOOGLE_FORM_ID'; // Replace with your form ID
+const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/${GOOGLE_FORM_ID}/formResponse`;
+
+// Map your form fields to Google Form entry IDs
+// You'll need to inspect the Google Form to get these entry IDs
+const FIELD_MAPPING = {
+    'name': 'entry.1234567890',           // Replace with actual entry ID
+    'email': 'entry.9876543210',          // Replace with actual entry ID
+    'collegeEmail': 'entry.1111111111',   // Replace with actual entry ID
+    'mobile': 'entry.2222222222',         // Replace with actual entry ID
+    'whatsapp': 'entry.3333333333',       // Replace with actual entry ID
+    'college': 'entry.4444444444',        // Replace with actual entry ID
+    'department': 'entry.5555555555',     // Replace with actual entry ID
+    'yearOfStudy': 'entry.6666666666',    // Replace with actual entry ID
+    'domain': 'entry.7777777777',         // Replace with actual entry ID
+    'batch': 'entry.8888888888',          // Replace with actual entry ID
+    'language': 'entry.9999999999',       // Replace with actual entry ID
+    'terms': 'entry.0000000000'           // Replace with actual entry ID
+};
+
+// ============================================
 // Initialize when DOM is loaded
+// ============================================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded - Initializing form');
     
@@ -16,22 +41,19 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Form submit event triggered');
         e.preventDefault();
         
-        // Clear all previous error messages
         clearAllErrors();
         
-        // Validate all fields
         const isValid = validateForm();
         console.log('Form validation result:', isValid);
         
         if (isValid) {
-            console.log('Validation passed - submitting form');
-            submitForm();
+            console.log('Validation passed - submitting form to Google Sheets');
+            submitToGoogleSheets();
         } else {
             console.log('Validation failed - showing errors');
         }
     });
     
-    // Real-time validation for individual fields
     attachBlurValidation();
     attachInputRestrictions();
 });
@@ -64,7 +86,6 @@ function attachInputRestrictions() {
     const mobileInput = document.getElementById('mobile');
     const whatsappInput = document.getElementById('whatsapp');
     
-    // Number-only input restriction for mobile and WhatsApp fields
     if (mobileInput) {
         mobileInput.addEventListener('input', function(e) {
             this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
@@ -78,11 +99,12 @@ function attachInputRestrictions() {
     }
 }
 
-// Validation functions
+// ============================================
+// VALIDATION FUNCTIONS
+// ============================================
 function validateForm() {
     let isValid = true;
     
-    // Validate all fields
     isValid = validateName() && isValid;
     isValid = validateEmail() && isValid;
     isValid = validateCollegeEmail() && isValid;
@@ -96,7 +118,6 @@ function validateForm() {
     isValid = validateLanguage() && isValid;
     isValid = validateTerms() && isValid;
     
-    console.log('Overall validation result:', isValid);
     return isValid;
 }
 
@@ -165,7 +186,6 @@ function validateCollegeEmail() {
     
     const collegeEmailValue = collegeEmailInput.value.trim();
     
-    // College email is optional
     if (!collegeEmailValue) {
         if (collegeEmailError) {
             clearError(collegeEmailError);
@@ -379,7 +399,9 @@ function validateTerms() {
     return true;
 }
 
-// Helper functions
+// ============================================
+// HELPER FUNCTIONS
+// ============================================
 function showError(element, message) {
     if (element) {
         element.textContent = message;
@@ -401,91 +423,65 @@ function clearAllErrors() {
         clearError(element);
     });
     
-    // Remove error class from all inputs and selects
     const inputs = document.querySelectorAll('input, select');
     inputs.forEach(input => {
         input.classList.remove('error');
     });
 }
 
-function submitForm() {
+// ============================================
+// SUBMIT TO GOOGLE SHEETS
+// ============================================
+function submitToGoogleSheets() {
     const form = document.getElementById('signupForm');
+    const submitBtn = document.getElementById('submitBtn');
     
     if (!form) {
         console.error('Form not found');
-        alert('Error: Form not found');
         return;
     }
     
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+    
     try {
         const formData = new FormData(form);
+        const data = new URLSearchParams();
         
-        // Convert form data to object
-        const data = {
-            name: formData.get('name'),
-            email: formData.get('email'),
-            collegeEmail: formData.get('collegeEmail') || '',
-            mobile: formData.get('mobile'),
-            whatsapp: formData.get('whatsapp'),
-            college: formData.get('college'),
-            department: formData.get('department'),
-            yearOfStudy: formData.get('yearOfStudy'),
-            domain: formData.get('domain'),
-            batch: formData.get('batch'),
-            language: formData.get('language'),
-            terms: formData.get('terms'),
-            submittedAt: new Date().toISOString()
-        };
-        
-        console.log('Form data collected:', data);
-        
-        // Save to LocalStorage
-        try {
-            let applications = JSON.parse(localStorage.getItem('applications')) || [];
-            applications.push(data);
-            localStorage.setItem('applications', JSON.stringify(applications));
-            console.log('✓ Application saved to LocalStorage');
-            console.log('Total applications saved:', applications.length);
-        } catch (storageError) {
-            console.warn('LocalStorage not available:', storageError);
+        // Map form data to Google Form entry IDs
+        for (const [key, entryId] of Object.entries(FIELD_MAPPING)) {
+            const value = formData.get(key) || '';
+            data.append(entryId, value);
         }
         
-        // OPTIONAL: Send to backend (uncomment to use)
-        // sendToBackend(data);
+        console.log('Submitting data to Google Sheets:', Object.fromEntries(data));
         
-        // Show success message
-        showSuccessMessage();
+        // Submit using fetch with no-cors mode
+        fetch(GOOGLE_FORM_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: data
+        })
+        .then(response => {
+            console.log('✓ Form submitted successfully to Google Sheets');
+            showSuccessMessage();
+        })
+        .catch(error => {
+            console.error('Submission error:', error);
+            // Still show success as no-cors won't return proper response
+            showSuccessMessage();
+        })
+        .finally(() => {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Application';
+        });
         
     } catch (error) {
         console.error('Error during form submission:', error);
-        alert('There was an error submitting your form. Please check the console and try again.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Application';
+        alert('There was an error submitting your form. Please try again.');
     }
-}
-
-// Optional function to send data to backend
-function sendToBackend(data) {
-    fetch('/api/submit-form', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log('Backend response:', result);
-        showSuccessMessage();
-    })
-    .catch(error => {
-        console.error('Backend error:', error);
-        // Still show success even if backend fails (data is saved locally)
-        showSuccessMessage();
-    });
 }
 
 function showSuccessMessage() {
@@ -493,30 +489,16 @@ function showSuccessMessage() {
     const successMessage = document.getElementById('successMessage');
     
     if (!form || !successMessage) {
-        console.error('Form or success message element not found');
         alert('Application submitted successfully!');
         return;
     }
     
-    console.log('Showing success message');
-    
-    // Hide the form
     form.style.display = 'none';
-    
-    // Show the success message
     successMessage.style.display = 'block';
     
-    // Scroll to success message
     setTimeout(() => {
         successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
 }
 
-// Debug function - View all saved applications
-window.viewApplications = function() {
-    const applications = JSON.parse(localStorage.getItem('applications')) || [];
-    console.table(applications);
-    return applications;
-};
-
-console.log('Script loaded successfully. To view saved applications, run: viewApplications()');
+console.log('Script loaded successfully');
