@@ -38,7 +38,7 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
 // Submit to Formspree
 function submitToFormspree(formData) {
     // Replace YOUR_FORM_ID with your actual Formspree form ID
-    const FORMSPREE_ID = 'YOUR_FORM_ID'; // You'll get this from Formspree
+    const FORMSPREE_ID = 'mvzbrgvz'; // You'll get this from Formspree
     
     fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method: 'POST',
