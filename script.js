@@ -1,4 +1,4 @@
-// Form validation and submission
+// Form submission handler
 document.getElementById('signupForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -12,35 +12,52 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
 
     // Collect form data
     const formData = {
-        personalInfo: {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            collegeEmail: document.getElementById('collegeEmail').value,
-            mobile: document.getElementById('mobile').value,
-            whatsapp: document.getElementById('whatsapp').value,
-            parentsMobile: document.getElementById('parentsMobile').value
-        },
-        educationInfo: {
-            college: document.getElementById('college').value,
-            department: document.getElementById('department').value,
-            yearOfStudy: document.querySelector('input[name="yearOfStudy"]:checked').value
-        },
-        preferences: {
-            domain: document.getElementById('domain').value,
-            batch: document.getElementById('batch').value,
-            language: document.getElementById('language').value
-        },
-        motivation: getSelectedCheckboxes('motivation'),
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        collegeEmail: document.getElementById('collegeEmail').value,
+        mobile: document.getElementById('mobile').value,
+        whatsapp: document.getElementById('whatsapp').value,
+        parentsMobile: document.getElementById('parentsMobile').value,
+        college: document.getElementById('college').value,
+        department: document.getElementById('department').value,
+        yearOfStudy: document.querySelector('input[name="yearOfStudy"]:checked').value,
+        domain: document.getElementById('domain').value,
+        batch: document.getElementById('batch').value,
+        language: document.getElementById('language').value,
+        motivation: getSelectedCheckboxes('motivation').join(', '),
         additionalInfo: document.getElementById('additionalInfo').value,
-        submittedAt: new Date().toISOString()
+        submittedAt: new Date().toLocaleString()
     };
 
-    // Log data (in production, send to server)
-    console.log('Form Data Submitted:', formData);
+    console.log('Form Data:', formData);
 
-    // Send to server (example)
-    submitToServer(formData);
+    // Send to Formspree
+    submitToFormspree(formData);
 });
+
+// Submit to Formspree
+function submitToFormspree(formData) {
+    // Replace YOUR_FORM_ID with your actual Formspree form ID
+    const FORMSPREE_ID = 'YOUR_FORM_ID'; // You'll get this from Formspree
+    
+    fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (response.ok) {
+            showSuccessMessage();
+            document.getElementById('signupForm').reset();
+        } else {
+            alert('Error submitting form. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error submitting form. Please try again.');
+    });
+}
 
 // Validation function
 function validateForm() {
@@ -173,28 +190,6 @@ function getSelectedCheckboxes(name) {
     return Array.from(checkboxes).map(cb => cb.value);
 }
 
-// Submit to server
-function submitToServer(formData) {
-    // This is where you'd send the data to your backend
-    // Example:
-    // fetch('/api/applications', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify(formData)
-    // })
-    // .then(response => response.json())
-    // .then(data => {
-    //     showSuccessMessage();
-    // })
-    // .catch(error => {
-    //     alert('Error submitting form. Please try again.');
-    //     console.error('Error:', error);
-    // });
-
-    // For demo, show success immediately
-    showSuccessMessage();
-}
-
 // Show success message
 function showSuccessMessage() {
     const form = document.getElementById('signupForm');
@@ -240,5 +235,4 @@ document.getElementById('parentsMobile').addEventListener('input', function() {
     this.value = this.value.replace(/\D/g, '').slice(0, 10);
 });
 
-// Log when form loads
 console.log('Career Launch Signup Form loaded successfully');
