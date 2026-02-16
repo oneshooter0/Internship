@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training & Internship Career Launchpad Program | Signup Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🚀 CareerLaunch</div>
+            <div class="nav-tagline">Skill India & Startup India Certified Program</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🚀 Unlock Your Career with CareerLaunch</h1>
+            <p class="subtitle">Admissions Open for New Batches</p>
+            <div class="hero-highlights">
+                <div class="highlight-item">
+                    <span class="highlight-icon">🎯</span>
+                    <span>3-Month Career-Boosting Program</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="highlight-icon">🏅</span>
+                    <span>Official Certifications by Skill India & Startup India</span>
+                </div>
+                <div class="highlight-item">
+                    <span class="highlight-icon">💼</span>
+                    <span>Real-Industry Projects & Job Portal Access</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Program Details Section -->
+    <section class="program-details">
+        <div class="container">
+            <h2>Your 3-Month Career-Boosting Journey</h2>
+            <div class="details-grid">
+                <div class="detail-card">
+                    <div class="detail-icon">🎯</div>
+                    <h3>Foundation Training</h3>
+                    <p>5 hours - Build strong fundamentals</p>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon">🔬</div>
+                    <h3>Deep-Dive Learning</h3>
+                    <p>38 hours of learning experience in your chosen domain</p>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon">💼</div>
+                    <h3>Real-Industry Projects</h3>
+                    <p>10 minor & 1 Major project with real companies</p>
+                </div>
+                <div class="detail-card">
+                    <div class="detail-icon">💻</div>
+                    <h3>Resume Support</h3>
+                    <p>Professional resume building + Job Portal Access</p>
+                </div>
+            </div>
+            <div class="certification-banner">
+                <span class="cert-icon">🏅</span>
+                <span>Official Certifications awarded upon completion, endorsed by Skill India & Startup India</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Signup Form Section -->
+    <section class="signup-section">
+        <div class="container">
+            <div class="form-header">
+                <h2>Join Our Next Batch</h2>
+                <p>Complete the form below to secure your spot</p>
+            </div>
+
+            <form id="signupForm" class="signup-form">
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h3 class="section-title">Personal Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="name">Name <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                        <span class="error-message" id="nameError"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email ID <span class="required">*</span></label>
+                            <input type="email" id="email" name="email" required placeholder="your.email@example.com">
+                            <span class="error-message" id="emailError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="collegeEmail">College Mail ID</label>
+                            <input type="email" id="collegeEmail" name="collegeEmail" placeholder="your.name@college.edu">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="mobile">Mobile No. <span class="required">*</span></label>
+                            <input type="tel" id="mobile" name="mobile" required placeholder="10-digit mobile number" maxlength="10">
+                            <span class="error-message" id="mobileError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp No. <span class="required">*</span></label>
+                            <input type="tel" id="whatsapp" name="whatsapp" required placeholder="10-digit WhatsApp number" maxlength="10">
+                            <span class="error-message" id="whatsappError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="parentsMobile">Parents' Contact Number <span class="required">*</span></label>
+                        <input type="tel" id="parentsMobile" name="parentsMobile" required placeholder="10-digit parent's contact" maxlength="10">
+                        <span class="error-message" id="parentsMobileError"></span>
+                    </div>
+                </div>
+
+                <!-- Educational Information -->
+                <div class="form-section">
+                    <h3 class="section-title">Educational Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="college">College/University <span class="required">*</span></label>
+                            <input type="text" id="college" name="college" required placeholder="Your college/university name">
+                            <span class="error-message" id="collegeError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="department">Department <span class="required">*</span></label>
+                            <input type="text" id="department" name="department" required placeholder="e.g., Computer Science, Electronics">
+                            <span class="error-message" id="departmentError"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yearOfStudy">Year of Study <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-label">
+                                <input type="radio" name="yearOfStudy" value="1st Year" required> 1st Year
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="yearOfStudy" value="2nd Year" required> 2nd Year
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="yearOfStudy" value="3rd Year" required> 3rd Year
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="yearOfStudy" value="4th Year" required> 4th Year
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="yearOfStudy" value="Other" required> Other
+                            </label>
+                        </div>
+                        <span class="error-message" id="yearError"></span>
+                    </div>
+                </div>
+
+                <!-- Program Preferences -->
+                <div class="form-section">
+                    <h3 class="section-title">Program Preferences</h3>
+                    
+                    <div class="form-group">
+                        <label for="domain">Interested Domain <span class="required">*</span></label>
+                        <select id="domain" name="domain" required>
+                            <option value="">-- Select a Domain --</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Mobile App Development">Mobile App Development</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="UI/UX Design">UI/UX Design</option>
+                            <option value="Cloud Computing">Cloud Computing</option>
+                            <option value="Cybersecurity">Cybersecurity</option>
+                            <option value="DevOps">DevOps</option>
+                            <option value="Digital Marketing">Digital Marketing</option>
+                            <option value="Business Analytics">Business Analytics</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="error-message" id="domainError"></span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="batch">Batch/Month Opted <span class="required">*</span></label>
+                            <select id="batch" name="batch" required>
+                                <option value="">-- Select Batch Month --</option>
+                                <option value="February">February</option>
+                                <option value="March">March</option>
+                                <option value="April">April</option>
+                                <option value="May">May</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span class="error-message" id="batchError"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="language">Comfortable Language <span class="required">*</span></label>
+                            <select id="language" name="language" required>
+                                <option value="">-- Select Language --</option>
+                                <option value="English">English</option>
+                                <option value="Hindi">Hindi</option>
+                                <option value="Telugu">Telugu</option>
+                                <option value="Tamil">Tamil</option>
+                                <option value="Kannada">Kannada</option>
+                                <option value="Malayalam">Malayalam</option>
+                                <option value="Marathi">Marathi</option>
+                                <option value="Bengali">Bengali</option>
+                                <option value="Gujarati">Gujarati</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <span class="error-message" id="languageError"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Motivation -->
+                <div class="form-section">
+                    <h3 class="section-title">Tell Us More About You</h3>
+                    
+                    <div class="form-group">
+                        <label>Why do you want to join this Training & Internship Program? <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I want to learn from scratch as I am a beginner"> 
+                                I want to learn from scratch as I am a beginner
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I want hands on experience"> 
+                                I want hands on experience
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I need to enhance my resume by adding certificates and projects"> 
+                                I need to enhance my resume by adding certificates and projects
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I need to submit Internship certificate in my college"> 
+                                I need to submit Internship certificate in my college
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I want major/minor projects to submit in college"> 
+                                I want major/minor projects to submit in college
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="Other"> 
+                                Other
+                            </label>
+                        </div>
+                        <span class="error-message" id="motivationError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="additionalInfo">Any Additional Information You'd Like to Share?</label>
+                        <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="Tell us more about yourself, your goals, and what you hope to achieve..."></textarea>
+                    </div>
+
+                    <div class="form-group checkbox-group-single">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terms" name="terms" required> 
+                            I agree to receive communications about this program <span class="required">*</span>
+                        </label>
+                        <span class="error-message" id="termsError"></span>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">Submit Application</button>
+            </form>
+
+            <div id="successMessage" class="success-message" style="display:none;">
+                <div class="success-content">
+                    <div class="success-icon">✓</div>
+                    <h3>Application Submitted Successfully!</h3>
+                    <p>Thank you for applying to our Training & Internship Program.</p>
+                    <p>We'll review your application and contact you shortly at the provided contact details.</p>
+                    <p class="success-email">Check your email for further updates.</p>
+                    <button class="reset-btn" onclick="location.reload()">Submit Another Application</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Us</h4>
+                    <p>We provide industry-recognized training and internship programs accredited by Skill India & Startup India.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@careerlaunch.com</p>
+                    <p>Support: support@careerlaunch.com</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Certifications</h4>
+                    <p>🏅 Skill India Certified</p>
+                    <p>⭐ Startup India Endorsed</p>
+                    <p>✓ NSDC Accredited</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 CareerLaunch. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
