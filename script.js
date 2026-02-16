@@ -91,13 +91,6 @@ function validateForm() {
         isValid = false;
     }
 
-    // Validate Parents Mobile
-    const parentsMobile = document.getElementById('parentsMobile').value.trim();
-    if (!isValidPhone(parentsMobile)) {
-        showError('parentsMobileError', 'Please enter a valid 10-digit parent contact number');
-        isValid = false;
-    }
-
     // Validate College
     const college = document.getElementById('college').value.trim();
     if (!college) {
@@ -227,10 +220,6 @@ document.getElementById('mobile').addEventListener('input', function() {
 });
 
 document.getElementById('whatsapp').addEventListener('input', function() {
-    this.value = this.value.replace(/\D/g, '').slice(0, 10);
-});
-
-document.getElementById('parentsMobile').addEventListener('input', function() {
     this.value = this.value.replace(/\D/g, '').slice(0, 10);
 });
 
