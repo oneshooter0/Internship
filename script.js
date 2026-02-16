@@ -1,7 +1,7 @@
 // ============================================
 // CONFIGURATION - UPDATE THESE VALUES
 // ============================================
-const GOOGLE_FORM_ID = 'YOUR_GOOGLE_FORM_ID'; // Replace with your form ID
+const GOOGLE_FORM_ID = 'https://docs.google.com/spreadsheets/d/1K4iofsKaOE1n7d_dXLOorKUAt2_PDOGjYWnnusGoAbQ/edit?usp=sharing'; // Replace with your form ID
 const GOOGLE_FORM_URL = `https://docs.google.com/forms/d/${GOOGLE_FORM_ID}/formResponse`;
 
 // Map your form fields to Google Form entry IDs
