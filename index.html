@@ -10,24 +10,24 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">CareerLaunch</div>
-            <div class="nav-tagline">Skill India & NSDC Certified Program</div>
+            <div class="logo">🚀 CareerLaunch</div>
+            <div class="nav-tagline">Skill India & Startup India Certified Program</div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Unlock Your Career with CareerLaunch</h1>
-            <p class="subtitle">Admissions Open for New Batch(summer internship)</p>
+            <h1>🚀 Unlock Your Career with CareerLaunch</h1>
+            <p class="subtitle">Admissions Open for New Batches</p>
             <div class="hero-highlights">
                 <div class="highlight-item">
                     <span class="highlight-icon">🎯</span>
-                    <span>2-Month Career-Boosting Program</span>
+                    <span>3-Month Career-Boosting Program</span>
                 </div>
                 <div class="highlight-item">
                     <span class="highlight-icon">🏅</span>
-                    <span>Official Certifications by Skill India & NSDC</span>
+                    <span>Official Certifications by Skill India & Startup India</span>
                 </div>
                 <div class="highlight-item">
                     <span class="highlight-icon">💼</span>
@@ -40,7 +40,7 @@
     <!-- Program Details Section -->
     <section class="program-details">
         <div class="container">
-            <h2>Your 2-Month Career-Boosting Journey</h2>
+            <h2>Your 3-Month Career-Boosting Journey</h2>
             <div class="details-grid">
                 <div class="detail-card">
                     <div class="detail-icon">🎯</div>
@@ -65,7 +65,7 @@
             </div>
             <div class="certification-banner">
                 <span class="cert-icon">🏅</span>
-                <span>Official Certifications awarded upon completion, endorsed by Skill India & NSDC</span>
+                <span>Official Certifications awarded upon completion, endorsed by Skill India & Startup India</span>
             </div>
         </div>
     </section>
@@ -113,6 +113,13 @@
                             <span class="error-message" id="whatsappError"></span>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="parentsMobile">Parents' Contact Number <span class="required">*</span></label>
+                        <input type="tel" id="parentsMobile" name="parentsMobile" required placeholder="10-digit parent's contact" maxlength="10">
+                        <span class="error-message" id="parentsMobileError"></span>
+                    </div>
+                </div>
 
                 <!-- Educational Information -->
                 <div class="form-section">
@@ -207,7 +214,49 @@
                             </select>
                             <span class="error-message" id="languageError"></span>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Motivation -->
                 <div class="form-section">
+                    <h3 class="section-title">Tell Us More About You</h3>
+                    
+                    <div class="form-group">
+                        <label>Why do you want to join this Training & Internship Program? <span class="required">*</span></label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I want to learn from scratch as I am a beginner"> 
+                                I want to learn from scratch as I am a beginner
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I want hands on experience"> 
+                                I want hands on experience
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I need to enhance my resume by adding certificates and projects"> 
+                                I need to enhance my resume by adding certificates and projects
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I need to submit Internship certificate in my college"> 
+                                I need to submit Internship certificate in my college
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="I want major/minor projects to submit in college"> 
+                                I want major/minor projects to submit in college
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="motivation" value="Other"> 
+                                Other
+                            </label>
+                        </div>
+                        <span class="error-message" id="motivationError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="additionalInfo">Any Additional Information You'd Like to Share?</label>
+                        <textarea id="additionalInfo" name="additionalInfo" rows="4" placeholder="Tell us more about yourself, your goals, and what you hope to achieve..."></textarea>
+                    </div>
+
                     <div class="form-group checkbox-group-single">
                         <label class="checkbox-label">
                             <input type="checkbox" id="terms" name="terms" required> 
@@ -216,7 +265,8 @@
                         <span class="error-message" id="termsError"></span>
                     </div>
                 </div>
-                        
+
+                <!-- Submit Button -->
                 <button type="submit" class="submit-btn">Submit Application</button>
             </form>
 
@@ -243,17 +293,18 @@
                 </div>
                 <div class="footer-section">
                     <h4>Contact</h4>
-                    <p>Support: support@launched.org.in</p>
-                    <p>Phone: 8884029458</p>
+                    <p>Email: info@careerlaunch.com</p>
+                    <p>Support: support@careerlaunch.com</p>
                 </div>
                 <div class="footer-section">
                     <h4>Certifications</h4>
                     <p>🏅 Skill India Certified</p>
-                    <p>⭐ NSDC</p>
+                    <p>⭐ Startup India Endorsed</p>
+                    <p>✓ NSDC Accredited</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026Launched Global. All rights reserved.</p>
+                <p>&copy; 2026 CareerLaunch. All rights reserved.</p>
             </div>
         </div>
     </footer>
