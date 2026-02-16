@@ -1,226 +1,347 @@
-// Form submission handler
-document.getElementById('signupForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Clear previous errors
-    clearErrors();
-
-    // Validate form
-    if (!validateForm()) {
-        return;
-    }
-
-    // Collect form data
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        collegeEmail: document.getElementById('collegeEmail').value,
-        mobile: document.getElementById('mobile').value,
-        whatsapp: document.getElementById('whatsapp').value,
-        college: document.getElementById('college').value,
-        department: document.getElementById('department').value,
-        yearOfStudy: document.querySelector('input[name="yearOfStudy"]:checked').value,
-        domain: document.getElementById('domain').value,
-        batch: document.getElementById('batch').value,
-        language: document.getElementById('language').value,
-        motivation: getSelectedCheckboxes('motivation').join(', '),
-        additionalInfo: document.getElementById('additionalInfo').value,
-        submittedAt: new Date().toLocaleString()
-    };
-
-    console.log('Form Data:', formData);
-
-    // Send to Formspree
-    submitToFormspree(formData);
+// Form validation and submission handler
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('signupForm');
+    
+    // Form submission handler
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Clear all previous error messages
+        clearAllErrors();
+        
+        // Validate all fields
+        if (validateForm()) {
+            // If validation passes, submit the form
+            submitForm();
+        }
+    });
+    
+    // Real-time validation for individual fields
+    document.getElementById('name').addEventListener('blur', validateName);
+    document.getElementById('email').addEventListener('blur', validateEmail);
+    document.getElementById('collegeEmail').addEventListener('blur', validateCollegeEmail);
+    document.getElementById('mobile').addEventListener('blur', validateMobile);
+    document.getElementById('whatsapp').addEventListener('blur', validateWhatsapp);
+    document.getElementById('college').addEventListener('blur', validateCollege);
+    document.getElementById('department').addEventListener('blur', validateDepartment);
+    document.getElementById('domain').addEventListener('change', validateDomain);
+    document.getElementById('batch').addEventListener('change', validateBatch);
+    document.getElementById('language').addEventListener('change', validateLanguage);
 });
 
-// Submit to Formspree
-function submitToFormspree(formData) {
-    // Replace YOUR_FORM_ID with your actual Formspree form ID
-    const FORMSPREE_ID = 'mvzbrgvz'; // You'll get this from Formspree
-    
-    fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-    })
-    .then(response => {
-        if (response.ok) {
-            showSuccessMessage();
-            document.getElementById('signupForm').reset();
-        } else {
-            alert('Error submitting form. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error submitting form. Please try again.');
-    });
-}
-
-// Validation function
+// Validation functions
 function validateForm() {
-    const form = document.getElementById('signupForm');
     let isValid = true;
-
-    // Validate Name
-    const name = document.getElementById('name').value.trim();
-    if (!name) {
-        showError('nameError', 'Please enter your full name');
-        isValid = false;
-    }
-
-    // Validate Email
-    const email = document.getElementById('email').value.trim();
-    if (!isValidEmail(email)) {
-        showError('emailError', 'Please enter a valid email address');
-        isValid = false;
-    }
-
-    // Validate Mobile
-    const mobile = document.getElementById('mobile').value.trim();
-    if (!isValidPhone(mobile)) {
-        showError('mobileError', 'Please enter a valid 10-digit mobile number');
-        isValid = false;
-    }
-
-    // Validate WhatsApp
-    const whatsapp = document.getElementById('whatsapp').value.trim();
-    if (!isValidPhone(whatsapp)) {
-        showError('whatsappError', 'Please enter a valid 10-digit WhatsApp number');
-        isValid = false;
-    }
-
-    // Validate College
-    const college = document.getElementById('college').value.trim();
-    if (!college) {
-        showError('collegeError', 'Please enter your college name');
-        isValid = false;
-    }
-
-    // Validate Department
-    const department = document.getElementById('department').value.trim();
-    if (!department) {
-        showError('departmentError', 'Please enter your department');
-        isValid = false;
-    }
-
-    // Validate Year of Study
-    const yearOfStudy = document.querySelector('input[name="yearOfStudy"]:checked');
-    if (!yearOfStudy) {
-        showError('yearError', 'Please select your year of study');
-        isValid = false;
-    }
-
-    // Validate Domain
-    const domain = document.getElementById('domain').value;
-    if (!domain) {
-        showError('domainError', 'Please select your interested domain');
-        isValid = false;
-    }
-
-    // Validate Batch
-    const batch = document.getElementById('batch').value;
-    if (!batch) {
-        showError('batchError', 'Please select your preferred batch');
-        isValid = false;
-    }
-
-    // Validate Language
-    const language = document.getElementById('language').value;
-    if (!language) {
-        showError('languageError', 'Please select your comfortable language');
-        isValid = false;
-    }
-
-    // Validate Motivation
-    const selectedMotivations = getSelectedCheckboxes('motivation');
-    if (selectedMotivations.length === 0) {
-        showError('motivationError', 'Please select at least one reason for joining');
-        isValid = false;
-    }
-
-    // Validate Terms
-    const terms = document.getElementById('terms').checked;
-    if (!terms) {
-        showError('termsError', 'Please agree to receive communications');
-        isValid = false;
-    }
-
+    
+    // Validate all fields
+    isValid = validateName() && isValid;
+    isValid = validateEmail() && isValid;
+    isValid = validateCollegeEmail() && isValid;
+    isValid = validateMobile() && isValid;
+    isValid = validateWhatsapp() && isValid;
+    isValid = validateCollege() && isValid;
+    isValid = validateDepartment() && isValid;
+    isValid = validateYearOfStudy() && isValid;
+    isValid = validateDomain() && isValid;
+    isValid = validateBatch() && isValid;
+    isValid = validateLanguage() && isValid;
+    isValid = validateTerms() && isValid;
+    
     return isValid;
 }
 
-// Helper functions
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-function isValidPhone(phone) {
-    const phoneRegex = /^[0-9]{10}$/;
-    return phoneRegex.test(phone.replace(/\D/g, ''));
-}
-
-function showError(elementId, message) {
-    const errorElement = document.getElementById(elementId);
-    if (errorElement) {
-        errorElement.textContent = message;
-        errorElement.parentElement.classList.add('error');
+function validateName() {
+    const nameInput = document.getElementById('name');
+    const nameError = document.getElementById('nameError');
+    const name = nameInput.value.trim();
+    
+    if (!name) {
+        showError(nameError, 'Name is required');
+        return false;
     }
+    
+    if (name.length < 2) {
+        showError(nameError, 'Name must be at least 2 characters long');
+        return false;
+    }
+    
+    if (!/^[a-zA-Z\s]+$/.test(name)) {
+        showError(nameError, 'Name should only contain letters and spaces');
+        return false;
+    }
+    
+    clearError(nameError);
+    return true;
 }
 
-function clearErrors() {
+function validateEmail() {
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const email = emailInput.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!email) {
+        showError(emailError, 'Email ID is required');
+        return false;
+    }
+    
+    if (!emailRegex.test(email)) {
+        showError(emailError, 'Please enter a valid email address');
+        return false;
+    }
+    
+    clearError(emailError);
+    return true;
+}
+
+function validateCollegeEmail() {
+    const collegeEmailInput = document.getElementById('collegeEmail');
+    const collegeEmailValue = collegeEmailInput.value.trim();
+    
+    // College email is optional
+    if (!collegeEmailValue) {
+        return true;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!emailRegex.test(collegeEmailValue)) {
+        showError(document.getElementById('collegeEmail'), 'Please enter a valid college email address');
+        return false;
+    }
+    
+    clearError(document.querySelector('[for="collegeEmail"] + input').parentElement.querySelector('.error-message'));
+    return true;
+}
+
+function validateMobile() {
+    const mobileInput = document.getElementById('mobile');
+    const mobileError = document.getElementById('mobileError');
+    const mobile = mobileInput.value.trim();
+    
+    if (!mobile) {
+        showError(mobileError, 'Mobile No. is required');
+        return false;
+    }
+    
+    if (!/^\d{10}$/.test(mobile)) {
+        showError(mobileError, 'Mobile number must be 10 digits');
+        return false;
+    }
+    
+    clearError(mobileError);
+    return true;
+}
+
+function validateWhatsapp() {
+    const whatsappInput = document.getElementById('whatsapp');
+    const whatsappError = document.getElementById('whatsappError');
+    const whatsapp = whatsappInput.value.trim();
+    
+    if (!whatsapp) {
+        showError(whatsappError, 'WhatsApp No. is required');
+        return false;
+    }
+    
+    if (!/^\d{10}$/.test(whatsapp)) {
+        showError(whatsappError, 'WhatsApp number must be 10 digits');
+        return false;
+    }
+    
+    clearError(whatsappError);
+    return true;
+}
+
+function validateCollege() {
+    const collegeInput = document.getElementById('college');
+    const collegeError = document.getElementById('collegeError');
+    const college = collegeInput.value.trim();
+    
+    if (!college) {
+        showError(collegeError, 'College/University is required');
+        return false;
+    }
+    
+    if (college.length < 3) {
+        showError(collegeError, 'Please enter a valid college/university name');
+        return false;
+    }
+    
+    clearError(collegeError);
+    return true;
+}
+
+function validateDepartment() {
+    const departmentInput = document.getElementById('department');
+    const departmentError = document.getElementById('departmentError');
+    const department = departmentInput.value.trim();
+    
+    if (!department) {
+        showError(departmentError, 'Department is required');
+        return false;
+    }
+    
+    if (department.length < 2) {
+        showError(departmentError, 'Please enter a valid department');
+        return false;
+    }
+    
+    clearError(departmentError);
+    return true;
+}
+
+function validateYearOfStudy() {
+    const yearError = document.getElementById('yearError');
+    const selectedYear = document.querySelector('input[name="yearOfStudy"]:checked');
+    
+    if (!selectedYear) {
+        showError(yearError, 'Please select your year of study');
+        return false;
+    }
+    
+    clearError(yearError);
+    return true;
+}
+
+function validateDomain() {
+    const domainSelect = document.getElementById('domain');
+    const domainError = document.getElementById('domainError');
+    const domain = domainSelect.value;
+    
+    if (!domain) {
+        showError(domainError, 'Please select an interested domain');
+        return false;
+    }
+    
+    clearError(domainError);
+    return true;
+}
+
+function validateBatch() {
+    const batchSelect = document.getElementById('batch');
+    const batchError = document.getElementById('batchError');
+    const batch = batchSelect.value;
+    
+    if (!batch) {
+        showError(batchError, 'Please select a batch/month');
+        return false;
+    }
+    
+    clearError(batchError);
+    return true;
+}
+
+function validateLanguage() {
+    const languageSelect = document.getElementById('language');
+    const languageError = document.getElementById('languageError');
+    const language = languageSelect.value;
+    
+    if (!language) {
+        showError(languageError, 'Please select a comfortable language');
+        return false;
+    }
+    
+    clearError(languageError);
+    return true;
+}
+
+function validateTerms() {
+    const termsCheckbox = document.getElementById('terms');
+    const termsError = document.getElementById('termsError');
+    
+    if (!termsCheckbox.checked) {
+        showError(termsError, 'You must agree to receive communications');
+        return false;
+    }
+    
+    clearError(termsError);
+    return true;
+}
+
+// Helper functions
+function showError(element, message) {
+    element.textContent = message;
+    element.style.display = 'block';
+}
+
+function clearError(element) {
+    element.textContent = '';
+    element.style.display = 'none';
+}
+
+function clearAllErrors() {
     const errorElements = document.querySelectorAll('.error-message');
     errorElements.forEach(element => {
-        element.textContent = '';
-        element.parentElement.classList.remove('error');
+        clearError(element);
     });
 }
 
-function getSelectedCheckboxes(name) {
-    const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
-    return Array.from(checkboxes).map(cb => cb.value);
+function submitForm() {
+    const form = document.getElementById('signupForm');
+    const formData = new FormData(form);
+    
+    // Convert form data to object
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        collegeEmail: formData.get('collegeEmail'),
+        mobile: formData.get('mobile'),
+        whatsapp: formData.get('whatsapp'),
+        college: formData.get('college'),
+        department: formData.get('department'),
+        yearOfStudy: formData.get('yearOfStudy'),
+        domain: formData.get('domain'),
+        batch: formData.get('batch'),
+        language: formData.get('language'),
+        terms: formData.get('terms'),
+        submittedAt: new Date().toISOString()
+    };
+    
+    // Log the form data (In production, send this to your backend)
+    console.log('Form submitted with data:', data);
+    
+    // Here you would typically send the data to your backend server
+    // Example:
+    // fetch('/api/submit-form', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data)
+    // })
+    // .then(response => response.json())
+    // .then(result => {
+    //     console.log('Success:', result);
+    //     showSuccessMessage();
+    // })
+    // .catch(error => {
+    //     console.error('Error:', error);
+    //     alert('There was an error submitting your form. Please try again.');
+    // });
+    
+    // For now, just show the success message
+    showSuccessMessage();
 }
 
-// Show success message
 function showSuccessMessage() {
     const form = document.getElementById('signupForm');
     const successMessage = document.getElementById('successMessage');
     
+    // Hide the form
     form.style.display = 'none';
+    
+    // Show the success message
     successMessage.style.display = 'block';
     
     // Scroll to success message
-    successMessage.scrollIntoView({ behavior: 'smooth' });
-
-    // Add overlay
-    createOverlay();
+    successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
-function createOverlay() {
-    if (!document.querySelector('.overlay')) {
-        const overlay = document.createElement('div');
-        overlay.className = 'overlay';
-        overlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        `;
-        document.body.appendChild(overlay);
-    }
-}
-
-// Prevent number fields from accepting non-numeric input
-document.getElementById('mobile').addEventListener('input', function() {
-    this.value = this.value.replace(/\D/g, '').slice(0, 10);
+// Optional: Add number-only input restriction for mobile and WhatsApp fields
+document.getElementById('mobile').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
 });
 
-document.getElementById('whatsapp').addEventListener('input', function() {
-    this.value = this.value.replace(/\D/g, '').slice(0, 10);
+document.getElementById('whatsapp').addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
 });
-
-console.log('Career Launch Signup Form loaded successfully');
